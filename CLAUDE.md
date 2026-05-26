@@ -29,8 +29,11 @@ Do not add `node-fetch` — Node 18+ (Railway default) has native `fetch` built 
 | Variable | Purpose |
 |---|---|
 | `SHOPIFY_STORE_DOMAIN` | e.g. `your-store.myshopify.com` |
-| `SHOPIFY_ACCESS_TOKEN` | Admin API token with Files write scope |
+| `SHOPIFY_CLIENT_ID` | Client ID from Dev Dashboard app settings |
+| `SHOPIFY_CLIENT_SECRET` | Client Secret from Dev Dashboard app settings |
 | `PORT` | Defaults to `3000` locally; Railway sets this automatically |
+
+**Do not use `SHOPIFY_ACCESS_TOKEN`** — this service uses a Dev Dashboard app (client credentials grant), not a static admin token. The token is fetched and cached automatically in `index.js`.
 
 ## Commands
 
@@ -39,6 +42,14 @@ npm install      # install dependencies
 npm start        # start the server (once index.js and the start script exist)
 ```
 
+## Authentication
+
+App was created via the **Dev Dashboard** (not Shopify admin). Dev Dashboard apps use the **client credentials grant** — no static `shpat_` token is issued. `index.js` calls `POST /admin/oauth/access_token` with `grant_type: client_credentials` and caches the result until 60 seconds before expiry.
+
+The app was installed on the store with "Embed app in Shopify admin" **unchecked** (API-only, no UI). The post-install redirect to `https://example.com` is expected and harmless.
+
+Required scope: `write_files`.
+
 ## Architecture
 
-Entry point is `index.js`. No source files exist yet — next step is building the Express server with a single `POST /upload` route that runs the three-step Shopify Files API flow.
+Entry point is `index.js`. Exposes a single `POST /upload` route that runs the three-step Shopify Files API flow. Token is fetched via `getAccessToken()` and cached in-memory.
