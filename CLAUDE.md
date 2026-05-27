@@ -52,4 +52,20 @@ Required scope: `write_files`.
 
 ## Architecture
 
-Entry point is `index.js`. Exposes a single `POST /upload` route that runs the three-step Shopify Files API flow. Token is fetched via `getAccessToken()` and cached in-memory.
+Entry point is `index.js`. Exposes a single `POST /upload-engraving-image` route that runs the three-step Shopify Files API flow. Token is fetched via `getAccessToken()` and cached in-memory.
+
+## Railway deployment URL
+
+Railway generates a public URL like `https://your-service-name.up.railway.app`. The endpoint path stays the same — only the host changes. The Shopify theme (and any Postman tests) should point to `https://your-service-name.up.railway.app/upload-engraving-image` once deployed. `localhost:3000` is local-only.
+
+## Postman / local testing
+
+1. Start the server: `npm start`
+2. In Postman, create a **POST** request to `http://localhost:3000/upload-engraving-image`
+3. Go to **Body** → **form-data**
+4. Add a key named `image`, change its type dropdown from **Text** to **File**, then select an image file
+5. Send — response will be `{ "url": "<shopify-cdn-url>" }`
+
+**Watch out for:**
+- Field name must be `image` (not `file`) — multer is configured as `upload.single("image")`
+- `pollForFileUrl` uses `node(id: $id)` not `file(id: $id)` — Shopify's Admin API has no `file` field on `QueryRoot`; all file types implement the `Node` interface

@@ -3,8 +3,8 @@
 ## Up Next
 
 - [ ] Fill in `.env` with real `SHOPIFY_CLIENT_ID`, `SHOPIFY_CLIENT_SECRET`, `SHOPIFY_STORE_DOMAIN`
-- [ ] Test upload flow end-to-end locally (`npm start` + curl)
 - [ ] Deploy to Railway and set env vars in Railway dashboard
+- [ ] Replace `localhost:3000` with the Railway-generated URL in the Shopify theme and any Postman collections
 
 ## Blocked
 
@@ -22,3 +22,5 @@
 - [x] Implement step 3: `fileCreate` mutation, return CDN URL
 - [x] Create Dev Dashboard app with `write_files` scope, install on store
 - [x] Switch auth from static token to client credentials grant (`SHOPIFY_CLIENT_ID` + `SHOPIFY_CLIENT_SECRET`)
+- [x] Rename endpoint from `/upload` to `/upload-engraving-image`
+- [x] Test upload flow end-to-end locally and confirm CDN URL is returned
