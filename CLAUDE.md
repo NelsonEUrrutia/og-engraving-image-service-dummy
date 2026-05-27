@@ -42,6 +42,18 @@ npm install      # install dependencies
 npm start        # start the server (once index.js and the start script exist)
 ```
 
+## Railway CLI workflow
+
+```bash
+railway login                                      # authenticate
+railway link                                       # connect local dir to Railway project
+railway variables set KEY=value                    # set env vars (Railway never reads .env)
+railway up                                         # deploy current directory
+railway logs                                       # stream live logs (useful when debugging)
+```
+
+Railway also supports auto-deploy on `git push` — connect the GitHub repo under **Settings → Source** in the dashboard.
+
 ## Authentication
 
 App was created via the **Dev Dashboard** (not Shopify admin). Dev Dashboard apps use the **client credentials grant** — no static `shpat_` token is issued. `index.js` calls `POST /admin/oauth/access_token` with `grant_type: client_credentials` and caches the result until 60 seconds before expiry.
@@ -56,7 +68,9 @@ Entry point is `index.js`. Exposes a single `POST /upload-engraving-image` route
 
 ## Railway deployment URL
 
-Railway generates a public URL like `https://your-service-name.up.railway.app`. The endpoint path stays the same — only the host changes. The Shopify theme (and any Postman tests) should point to `https://your-service-name.up.railway.app/upload-engraving-image` once deployed. `localhost:3000` is local-only.
+Production endpoint: `https://og-images-service-production.up.railway.app/upload-engraving-image`
+
+The Shopify theme (and any Postman tests) should point to this URL. `localhost:3000` is local-only.
 
 ## Postman / local testing
 

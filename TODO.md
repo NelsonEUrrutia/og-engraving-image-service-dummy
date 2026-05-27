@@ -3,8 +3,9 @@
 ## Up Next
 
 - [ ] Fill in `.env` with real `SHOPIFY_CLIENT_ID`, `SHOPIFY_CLIENT_SECRET`, `SHOPIFY_STORE_DOMAIN`
-- [ ] Deploy to Railway and set env vars in Railway dashboard
-- [ ] Replace `localhost:3000` with the Railway-generated URL in the Shopify theme and any Postman collections
+- [ ] Migrate code to production repo when ready (copy index.js, package.json, package-lock.json, .gitignore — re-set Railway env vars on new service)
+- [x] Deploy to Railway and set env vars in Railway dashboard
+- [x] Replace `localhost:3000` with the Railway-generated URL in the Shopify theme and any Postman collections
 
 ## Blocked
 
